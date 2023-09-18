@@ -35,9 +35,9 @@ Resources:
         pip3 install flask
         yum install git -y
         cd /home/ec2-user
-        wget -P templates https://raw.githubusercontent.com/sevgi45/Proje-102-Roman1/main/templates/index.html
-        wget -P templates https://raw.githubusercontent.com/sevgi45/Proje-102-Roman1/main/templates/result.html
-        wget https://raw.githubusercontent.com/sevgi45/Proje-102-Roman1/main/roman-numerals-converter-app.py
+        wget -P https://raw.githubusercontent.com/sevgi45/Proje-102-Roman1/main/templates/index.html
+        wget -P https://raw.githubusercontent.com/sevgi45/Proje-102-Roman1/main/templates/result.html
+        wget https://raw.githubusercontent.com/sevgi45/Proje-102-Roman1/main/app.py
         python3 app.py
 
   MySecGroup:
