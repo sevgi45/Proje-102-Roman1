@@ -5,17 +5,15 @@ Description: |
   This template creates Python Flask Web Application on Amazon Linux 2023  
   EC2 Instance with custom security group allowing http connections on port 80, 8080 and SSH connection on port 22. Roman Numerals Converter Application is downloaded from Github repository, then installed on Flask.
 
-
 Parameters:
   LatestAmiId:
-    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
-    Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64'
+    Type: "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>"
+    Default: "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64"
 
   KeyName:
-    Description: Chose your Keypair 
+    Description: Chose your Keypair
     Type: AWS::EC2::KeyPair::KeyName
     Default: firstkey
-
 
 Resources:
   MyWebServer:
@@ -24,9 +22,9 @@ Resources:
       ImageId: !Ref LatestAmiId
       InstanceType: t2.micro
       KeyName: !Ref KeyName
-      SecurityGroupIds: 
+      SecurityGroupIds:
         - !Ref MySecGroup
-      Tags: 
+      Tags:
         - Key: Name
           Value: !Sub Web Server of ${AWS::StackName} Stack
       UserData: !Base64 |
@@ -37,9 +35,9 @@ Resources:
         pip3 install flask
         yum install git -y
         cd /home/ec2-user
-        wget -P templates https://raw.githubusercontent.com/awsdevopsteam/roman-number-conventor/master/templates/index.html
-        wget -P templates https://raw.githubusercontent.com/awsdevopsteam/roman-number-conventor/master/templates/result.html
-        wget https://raw.githubusercontent.com/awsdevopsteam/roman-number-conventor/master/app.py
+        wget -P templates https://raw.githubusercontent.com/sevgi45/Proje-102-Roman1/main/templates/index.html
+        wget -P templates https://raw.githubusercontent.com/sevgi45/Proje-102-Roman1/main/templates/result.html
+        wget https://raw.githubusercontent.com/sevgi45/Proje-102-Roman1/main/roman-numerals-converter-app.py
         python3 app.py
 
   MySecGroup:
@@ -47,7 +45,7 @@ Resources:
     Properties:
       GroupDescription: SSH, HTTP and port 8080 # Required
       GroupName: SevgiSecGroup
-      SecurityGroupIngress: 
+      SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
           ToPort: 80
@@ -60,10 +58,10 @@ Resources:
           FromPort: 8080
           ToPort: 8080
           CidrIp: 0.0.0.0/0
-    
+
 Outputs:
- WebsiteURL:
-    Value: !Sub 
+  WebsiteURL:
+    Value: !Sub
       - http://${PIA}
-      - PIA: !GetAtt myWebServer.PublicDnsName
+      - PIA: !GetAtt MyWebServer.PublicDnsName
     Description: Roman Numerals Converter Application URL
